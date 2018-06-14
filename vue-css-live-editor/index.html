@@ -1,0 +1,135 @@
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.min.js"></script>
+<script src="https://unpkg.com/lodash/lodash.min.js"></script>
+<script src="./sass.js"></script>
+
+<div id="app" class="container">
+
+  <live-style>
+    {{ css }}
+  </live-style>
+
+  <div class="preview">
+    <h1>Preview Heading</h1>
+    <p>Preview paragraph.</p>
+    <div class="error">{{ errorMsg }}</div>
+  </div>
+
+  <textarea class="editor"
+    v-model="scss"
+    @keyup="compileScssToCss"
+    spellcheck="false"
+    autofocus>
+  </textarea>
+</div>
+
+<script>
+
+Vue.component('live-style', {
+  render(createElement) {
+    return createElement('style', this.$slots.default)
+  }
+})
+
+new Vue({
+  el: '#app',
+  data: () => ({
+    css: '',
+    errorMsg: '',
+    scss: `$padding: 2rem;
+$color: salmon;
+padding: $padding;
+
+p {
+  color: $color;
+}`
+  }),
+  methods: {
+    compileScssToCss: _.debounce(function () {
+      const sass = new Sass()
+      var wrappedSCSS = `.preview { ${this.scss} }`
+      sass.compile(wrappedSCSS, css => {
+        if (css.status === 0) {
+          this.errorMsg = ''
+          this.css = css.text
+        } else {
+          this.errorMsg = css.formatted
+        }
+      })
+    }, 500)
+  },
+  mounted() {
+    this.compileScssToCss();
+  }
+})
+</script>
+
+<style>
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+}
+
+.editor,
+.preview {
+  flex: 1;
+  overflow: hidden;
+}
+
+.editor {
+  border: none;
+  outline: none;
+  padding: 2rem;
+  max-width: 33%;
+  min-width: 400px;
+  border-left:  4px solid #777;
+
+  color: #eee;
+  background: #2b3a4c;
+  font-family: "Source Code Pro";
+  font-size: 1rem;
+  line-height: 1.6;
+  white-space: pre-line;
+  caret-color: salmon;
+}
+
+.preview {
+  position: relative;
+}
+
+.preview * {
+  font-family: sans-serif;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.error {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  left: 1rem;
+  background: red;
+  border-radius: 4px;
+  color: white;
+  font-family: "Source Code Pro";
+  font-size: 0.9rem;
+  line-height: 1.6;
+  padding: 1rem;
+  white-space: pre-wrap;
+  transition: opacity 100ms ease-out, transform 100ms ease-out;
+}
+
+.error:empty {
+  opacity: 0;
+  transform: translateY(2rem);
+}
+
+</style>
