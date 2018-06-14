@@ -1,0 +1,7 @@
+@mixin flex-item($align: initial, $justify: initial) {
+  display: flex;
+  align-items: $align;
+  @if ($justify != initial) {
+    justify-content: $justify;
+  }
+}

@@ -1,0 +1,48 @@
+<svg width="120" height="120" viewPort="0 0 120 120" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <rect x="10" y="10" width="100" height="100" fill="lightblue">
+    <animate attributeName="x"
+             attributeType="XML"
+             from="-100"
+             to="120"
+             dur="10s"
+             repeatCount="indefinite"/>
+    <animate attributeName="y"
+             attributeType="XML"
+             from="100"
+             to="10"
+             dur="10s"
+             repeatCount="indefinite"/>
+  </rect>
+</svg>
+
+<svg width="120" height="120"  viewBox="0 0 120 120" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <polygon points="60, 30 90, 90 30, 90" fill="salmon">
+    <animateTransform attributeName="transform"
+                      attributeType="XML"
+                      type="rotate"
+                      from="0 60 70"
+                      to="360 60 70"
+                      dur="10s"
+                      repeatCount="indefinite"/>
+  </polygon>
+</svg>
+
+<svg width="120" height="120" viewBox="0 0 120 120" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <!-- Draw the outline of the motion path in grey, along with 2 small circles at key points -->
+  <path d="M10,110 A120,120 -45 0,1 110 10 A120,120 -45 0,1 10,110"
+        stroke="lightgrey"
+        stroke-width="2"
+        fill="none"
+        id="theMotionPath"/>
+  <circle cx="10" cy="110" r="3" fill="lightgrey"/>
+  <circle cx="110" cy="10" r="3" fill="lightgrey"/>
+
+  <!-- Red circle which will be moved along the motion path. -->
+  <circle cx="" cy="" r="5" fill="aquamarine">
+    <!-- Define the motion path animation -->
+    <animateMotion dur="6s" repeatCount="indefinite">
+      <mpath xlink:href="#theMotionPath"/>
+    </animateMotion>
+  </circle>
+</svg>
+
