@@ -1,0 +1,93 @@
+<meta charset="utf-8">
+<title>CSS Button Example</title>
+<script src="http://livejs.com/live.js"></script>
+
+<button class="button">
+  <span class="button__icon"></span>
+  <span class="button__text">My Button</span>
+</button>
+
+<style>
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.button,
+.button__icon,
+.button__text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button {
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  height: 50px;
+  width: 200px;
+  background-image: linear-gradient(to top right, #111, #333);
+  border-radius: 5px;
+  overflow: hidden;
+  color: white;
+  outline: none;
+}
+
+.button:active {
+	background-image: linear-gradient(to bottom right, #111, #333);
+}
+
+.button__icon {
+  flex: 1;
+  height: 50px;
+  font-size: 1rem;
+  position: relative;
+  filter: saturate(0);
+  border-right: 1px solid #111;
+  background-image: linear-gradient(to bottom right, #000, #333);
+  transition: flex 100ms cubic-bezier(0.5, 0, 0.5, 1.5), box-shadow 200ms, color 200ms;
+}
+
+.button__icon:before {
+  content: '🖖';
+  position: absolute;
+  transform-origin: center;
+  transition: opacity 200ms;
+}
+
+.button__icon:after {
+  content: '👍';
+  opacity: 0;
+  transform: rotate(-90deg);
+  transform-origin: center;
+  transition: opacity 200ms, transform 200ms cubic-bezier(0.5, 0, 0.5, 1.5);
+}
+
+.button__text {
+  flex: 3;
+  text-transform: uppercase;
+  border-left: 1px solid #333;
+  height: 50px;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+
+.button:hover .button__icon {
+  box-shadow: inset 0 0 0 1000px rgba(255, 215, 102, 0.15);
+  filter: saturate(1);
+  flex: 1.3;
+}
+
+.button:hover .button__icon:before {
+  opacity: 0;
+}
+
+.button:hover .button__icon:after {
+  opacity: 1;
+  transform: rotate(0);
+}
+</style>

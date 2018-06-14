@@ -1,0 +1,38 @@
+@for $i from 1 to 20 {
+  .staggered:nth-child(#{$i})  {
+    animation-delay: calc(#{$i} * 100ms);
+  }
+}
+
+.staggered-list__item {
+  opacity: 0;
+  transform: translate3d(-2rem, -2rem, 0);
+  transition-property: opacity, transform;
+  transition-timing-function: ease-out;
+  transition-duration: 300ms;
+
+  @for $i from 1 through 20 {
+    &:nth-of-type(#{$i})  {
+      transition-delay: $i * 100ms;
+    }
+  }
+}
+
+.staggered-list.is-open {
+  .staggered-list__item {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+
+// Increment by specific amount
+$delay: 100ms;
+$inc: 50;
+
+@for $i from 1 to 20 {
+  .staggered-list__item:nth-child(#{$i})  {
+    transition-delay: $delay;
+    $delay: $delay + $inc;
+  }
+}

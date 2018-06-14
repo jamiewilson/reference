@@ -1,0 +1,39 @@
+<title>CSS Select Element Styling</title>
+
+<select name="video-options" id="video-options" required>
+  <option value="default" class="default" selected disabled>Select an option</option>
+  <option value="video1">Option Number 1</option>
+  <option value="video2">Option Number 2</option>
+  <option value="video3">Option Number 3</option>
+  <option value="video4">Option Number 4</option>
+  <option value="video5">Option Number 5</option>
+</select>
+
+<style>
+body {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+select {
+  border: none;
+  border-radius: 0;
+  font-size: inherit;
+  outline: none;
+  -webkit-appearance: none;
+
+  background: #E8E8E8;
+  width: 100%;
+  max-width: 400px;
+
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="11" viewBox="-469 273 8 11" enable-background="new -469 273 8 11"><path fill="#B4B4B4" d="M-469 277l4-4 4 4zM-461 280l-4 4-4-4z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+
+  padding: 1rem;
+  padding-right: 2.5rem !important;
+  -webkit-padding-start: 1rem !important;
+  -webkit-padding-end: 2.5rem !important;
+}
+</style>

@@ -1,0 +1,25 @@
+<title>SCSS Live Compilation Playground</title>
+<meta charset="utf-8">
+<script src="https://unpkg.com/lodash/lodash.min.js"></script>
+<link rel="stylesheet" href="css/main.css">
+<script src="js/sass.js"></script>
+<script src="js/editor.js"></script>
+
+<style class="style"></style>
+
+<main>
+  <div class="error"></div>
+  <div class="output" contenteditable spellcheck="false">This is your SCSS playground. You can edit/delete this text.</div>
+</main>
+
+<textarea class="editor" spellcheck="false" autofocus>
+$bg-color: cyan;
+$color: black;
+
+background: lighten($bg-color, 40);
+color: rgba($color, 0.5);
+
+padding: 1rem;
+font-size: 1rem * 2;
+line-height: 1.5;
+</textarea>

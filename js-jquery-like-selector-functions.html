@@ -1,0 +1,46 @@
+<h1>jQuery-like selector functions</h1>
+
+<ul>
+  <li>Dapibus <span class="counter a">0</span></li>
+  <li>Parturient <span class="counter b">0</span></li>
+  <li>Bibendum <span class="counter c">0</span></li>
+  <li>Tortor <span class="counter d">0</span></li>
+  <li>Tristique <span class="counter e">0</span></li>
+</ul>
+
+<script class="main">
+const $ = (selector, target = document) => target.querySelector(selector)
+const $$ = selector => document.querySelectorAll(selector)
+const $on = (type, target, callback) => target.addEventListener(type, callback)
+
+$('h1').style = 'color: red;'
+$$('li').forEach(elem => $on('click', elem, inc))
+
+function inc() {
+  let counter = $('.counter', this)
+  let count = +counter.textContent + 1
+  counter.textContent = count
+}
+</script>
+
+<style>
+script.main {
+  display: block;
+  white-space: pre-wrap;
+  font-family: monospace;
+  background: whitesmoke;
+  padding: 1rem;
+}
+
+li {
+  list-style: none;
+  list-style-position: outside;
+  cursor: pointer;
+  user-select: none;
+}
+
+li:before {
+  content: '+';
+  margin-right: 10px;
+}
+</style>

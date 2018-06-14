@@ -1,0 +1,47 @@
+<title>fetch() API example</title>
+
+<div class="profile"></div>
+<ul class="stars"></ul>
+
+<script type="text/javascript">
+const profileEl = document.querySelector('.profile')
+const starsEl = document.querySelector('.stars')
+
+fetch('https://api.github.com/users/jamiewilson')
+  .then(profile => profile.json())
+  .then(profile => {
+    profileEl.innerHTML += `
+      <img class="avatar" src="${profile.avatar_url}">
+      <h1 class="name">${profile.name}</h1>
+      <p class="bio">${profile.bio}</p>
+      <a href="${profile.html_url}">View Profile</a>
+    `
+  })
+
+fetch('https://api.github.com/users/jamiewilson/starred?per_page=20')
+  .then(stars => stars.json())
+  .then(stars => {
+    stars.forEach(star => {
+      starsEl.innerHTML += `<li><a href="${star.html_url}">${star.name}</a></li>`
+    })
+  })
+</script>
+
+<style type="text/css">
+.profile {
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+.avatar {
+  width: 100px;
+  border-radius: 100%;
+}
+.stars {
+  list-style: none;
+  line-height: 1.8;
+  margin: 5%;
+  padding: 0;
+  columns: 3;
+}
+</style>

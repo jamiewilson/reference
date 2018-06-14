@@ -1,0 +1,77 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  display: flex;
+}
+
+main {
+  position: relative !important;
+  display: flex !important;
+  max-width: initial !important;
+  overflow: auto !important;
+  border-radius: 0 !important;
+}
+
+main,
+.editor,
+.output {
+  flex: 1;
+  outline: none;
+}
+
+.editor {
+  max-width: 400px;
+  outline: none;
+  border: none;
+  background: #222;
+  color: white;
+  white-space: pre-wrap;
+  font-family: "Office Code Pro";
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.6;
+  tab-size: 2;
+  padding: 2rem;
+  caret-color: cyan;
+}
+
+.editor * {
+  all: unset;
+  white-space: pre-wrap !important;
+  background: #222 !important;
+  color: #EEE !important;
+  font-family: "Office Code Pro" !important;
+  font-weight: 300 !important;
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+  text-decoration: none !important;
+  border: none !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.error {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  left: 1rem;
+  background: red;
+  border-radius: 4px;
+  color: white;
+  font-family: "Office Code Pro";
+  font-size: 0.9rem;
+  line-height: 1.6;
+  padding: 1rem;
+  white-space: pre-wrap;
+  transition: opacity 100ms ease-out, transform 100ms ease-out;
+}
+
+.error:empty {
+  opacity: 0;
+  transform: translateY(2rem);
+}

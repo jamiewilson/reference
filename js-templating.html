@@ -1,0 +1,22 @@
+<title>Templating Test</title>
+
+<body>
+  <template name="header">
+    <header>Default Header</header>
+  </template>
+
+  <template name="main">
+    <main>Default Main</main>
+  </template>
+
+  <template name="footer">
+    <footer>Default Footer</footer>
+  </template>
+</body>
+
+<script type="text/javascript">
+  var templates = document.querySelectorAll('template')
+  templates.forEach(function(template) {
+    document.body.appendChild(template.content.cloneNode(true))
+  })
+</script>

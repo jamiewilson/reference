@@ -1,0 +1,62 @@
+<meta charset="utf-8">
+
+<div class="dropdown">
+  <h3 class="dropdown__title">Expanding Element Title</h3>
+  <p class="dropdown__body">Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur.</p>
+</div>
+
+<div class="dropdown">
+  <h3 class="dropdown__title">Expanding Element Title</h3>
+  <p class="dropdown__body">Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur.</p>
+</div>
+
+<div class="dropdown">
+  <h3 class="dropdown__title">Expanding Element Title</h3>
+  <p class="dropdown__body">Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur.</p>
+</div>
+
+<div class="dropdown">
+  <h3 class="dropdown__title">Expanding Element Title</h3>
+  <p class="dropdown__body">Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur.</p>
+</div>
+
+<script>
+  // Get all elements with the 'dropdown' class
+  // Close an .open dropdown on click
+  // Close all other dropdowns when a new one is opened
+  // Reveal content within dropdown element
+  const dropdowns = document.querySelectorAll('.dropdown')
+  dropdowns.forEach(el => {
+    const isOpen = () => el.classList.contains('open')
+    const open = () => el.classList.add('open')
+    const close = (el) => el.classList.remove('open')
+    el.addEventListener('click', () => isOpen() ? close(el) : (dropdowns.forEach(el => close(el)), open()))
+  })
+</script>
+
+<style>
+  .dropdown {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .dropdown::after {
+    content: "➕";
+    position: absolute;
+    top: 0;
+    right: 1rem;
+  }
+
+  .dropdown.open::after {
+    content: "➖";
+  }
+
+  .dropdown__body {
+    height: 0;
+    overflow: hidden;
+  }
+
+  .dropdown.open .dropdown__body {
+    height: auto;
+  }
+</style>

@@ -1,0 +1,23 @@
+.grid {
+  // http://labs.jensimmons.com/2017/01-009D.html
+  // columns: 300px;
+  // column-gap: 2rem;
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 2rem;
+  // Makes grid item height equal height of image
+  align-items: start;
+}
+
+.grid__item {
+  // http://labs.jensimmons.com/2017/01-009D.html
+  // break-inside: avoid-column;
+  // margin-bottom: 2rem;
+  position: relative;
+  background: white;
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 1rem;
+  animation: fade 500ms;
+}
