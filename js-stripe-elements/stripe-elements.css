@@ -1,0 +1,85 @@
+.stripe-elements-demo {
+  --accent: #f18260;
+  --dark-grey: #222;
+  --mid-grey: #ddd;
+  --light-grey: #eee;
+  --error: #eb1c26;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--light-grey);
+}
+
+.payment-form {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: var(--dark-grey);
+  font-family: system, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  width: 400px;
+  padding: 2rem;
+  margin: 2rem;
+  background: white;
+}
+
+.payment-form.--invalid {
+  animation: shake 200ms ease-out;
+}
+
+.card-element-label {
+  line-height: 1;
+  display: inline-block;
+  font-size: 80%;
+  margin-bottom: 1rem;
+}
+
+.card-element {
+  background: #eee;
+  border: 1px solid var(--mid-grey);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.card-element.--focus {
+  border-color: var(--dark-grey);
+}
+
+.card-element.--invalid {
+  border-color: var(--error);
+}
+
+.payment-button {
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  width: 100%;
+
+  color: white;
+  background: var(--dark-grey);
+  padding: 1rem;
+  transition: background 100ms;
+}
+
+.payment-button:hover {
+  background: var(--accent);
+}
+
+.card-errors {
+  color: var(--error);
+  font-size: 80%;
+  margin-bottom: 1rem;
+}
+
+@keyframes shake {
+  15% { transform: translateX(0.5rem); }
+  30% { transform: translateX(-0.4rem); }
+  45% { transform: translateX(0.3rem); }
+  60% { transform: translateX(-0.2rem); }
+  75% { transform: translateX(0.1rem); }
+  90% { transform: translateX(0); }
+  90% { transform: translateX(0); }
+}

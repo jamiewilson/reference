@@ -1,0 +1,14 @@
+@mixin fancy-underline($text: inherit, $border: $cerulean) {
+  color: $text;
+  text-decoration: none !important;
+  cursor: pointer;
+  text-shadow: 0.03em 0 #fff, -0.03em 0 #fff, 0 0.03em #fff, 0 -0.03em #fff, 0.06em 0 #fff, -0.06em 0 #fff, 0.09em 0 #fff, -0.09em 0 #fff, 0.12em 0 #fff, -0.12em 0 #fff, 0.15em 0 #fff, -0.15em 0 #fff;
+  background-image: linear-gradient(to bottom, $border 50%, transparent 0%);
+  background-repeat: repeat-x;
+  background-size: 2px 2px;
+  background-position: bottom;
+  transition: color 100ms;
+  &:hover {
+    color: $border;
+  }
+}
