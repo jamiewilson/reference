@@ -1,14 +1,14 @@
 <h1>jQuery-like selector functions</h1>
 
 <ul>
-  <li>Dapibus <span class="counter a">0</span></li>
-  <li>Parturient <span class="counter b">0</span></li>
-  <li>Bibendum <span class="counter c">0</span></li>
-  <li>Tortor <span class="counter d">0</span></li>
-  <li>Tristique <span class="counter e">0</span></li>
+  <li><span class="counter">0</span> Dapibus</li>
+  <li><span class="counter">0</span> Parturient</li>
+  <li><span class="counter">0</span> Bibendum</li>
+  <li><span class="counter">0</span> Tortor</li>
+  <li><span class="counter">0</span> Tristique</li>
 </ul>
 
-<script class="main">
+<script class="visible">
 const $ = (selector, target = document) => target.querySelector(selector)
 const $$ = selector => document.querySelectorAll(selector)
 const $on = (type, target, callback) => target.addEventListener(type, callback)
@@ -24,23 +24,39 @@ function inc() {
 </script>
 
 <style>
-script.main {
+script.visible {
   display: block;
   white-space: pre-wrap;
   font-family: monospace;
   background: whitesmoke;
   padding: 1rem;
+  line-height: 1.4;
+}
+
+.counter {
+	font-weight: bold;
+	margin-right: 5px;
 }
 
 li {
+	width: max-content;
   list-style: none;
   list-style-position: outside;
   cursor: pointer;
   user-select: none;
+  margin-bottom: 0.5rem;
 }
 
-li:before {
+li:after {
   content: '+';
-  margin-right: 10px;
+  margin-left: 10px;
+  color: white;
+  background: lime;
+  height: 18px;
+  width: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
 }
 </style>

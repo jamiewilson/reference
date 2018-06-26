@@ -1,62 +1,92 @@
 <title>Functional UI in Vanilla JS</title>
-<meta charset="utf-8">
 
 <body id="App"></body>
 
 <script>
-const posts = [
-  {
-    title: `The Yellow River`,
-    author: `I.P. Daily`,
-    body: `Sed posuere consectetur est at lobortis. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna mollis ornare vel eu leo. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.`,
-    label: `New!`
-  },
-  {
-    title: `Under the Bleachers`,
-    author: `Seymour Butts`,
-    body: `Etiam porta sem malesuada magna mollis euismod. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Sed posuere consectetur est at lobortis. Vestibulum id ligula porta felis euismod semper.`
-  },
-  {
-    title: `The Future of Robotics`,
-    author: `Cy Borg and Anne Droid`,
-    body: `Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas sed diam eget risus varius blandit sit amet non magna. Vestibulum id ligula porta felis euismod semper.`
-  }
-]
+const App = document.querySelector('#App')
 
-function Main(data) {
-  return  `<main>
-            ${Header()}
-            ${PostList(data)}
-          </main>`
+const books = {
+	best: [
+	  {
+	    title: `The Yellow River`,
+	    author: `I.P. Daily`,
+	    body: `Sed posuere consectetur est at lobortis. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna mollis ornare vel eu leo. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.`,
+	    label: `Best!`
+	  },
+	  {
+	    title: `Under the Bleachers`,
+	    author: `Seymour Butts`,
+	    body: `Etiam porta sem malesuada magna mollis euismod. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Sed posuere consectetur est at lobortis. Vestibulum id ligula porta felis euismod semper.`
+	  },
+	  {
+	    title: `The Future of Robotics`,
+	    author: `Cy Borg and Anne Droid`,
+	    body: `Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas sed diam eget risus varius blandit sit amet non magna. Vestibulum id ligula porta felis euismod semper.`
+	  }
+	],
+
+	worst: [
+	  {
+	    title: `The Numbers Game`,
+	    author: `Cal Q. Later`,
+	    body: `Sed posuere consectetur est at lobortis. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna mollis ornare vel eu leo. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.`
+	  },
+	  {
+	    title: `Sitting on the Beach`,
+	    author: `Sandy Cheeks`,
+	    body: `Etiam porta sem malesuada magna mollis euismod. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Sed posuere consectetur est at lobortis. Vestibulum id ligula porta felis euismod semper.`,
+	    label: `Worst!`
+	  },
+	  {
+	    title: `101 Ways to Diet`,
+	    author: `I. M. Hungry`,
+	    body: `Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas sed diam eget risus varius blandit sit amet non magna. Vestibulum id ligula porta felis euismod semper.`
+	  }
+	]
 }
 
-function Header() {
-  return `<header>
-            <div>My favorite books</div>
-          </header>`
-}
-
-function PostList(data) {
-  return `<div>${data.map(Post).join('')}</div>`
-}
-
-function Post(data) {
-  return `<article ${data.label ? `data-label="${data.label}"` : ''}>
-            <h1>${data.title}</h1>
-            <strong>by ${data.author}</strong>
-            <p>${data.body}</p>
+function Listicle({ title, items }) {
+  return  `<article>
+            ${Header(title || 'Default Header Title')}
+            ${List(items)}
           </article>`
 }
 
-document.querySelector('#App').innerHTML = Main(posts)
+function Header(title) {
+  return `<header>
+            <div>${title}</div>
+          </header>`
+}
+
+function List(items) {
+  return `<div>${items.map(ListItem).join('')}</div>`
+}
+
+function ListItem(item) {
+  return `<section ${item.label ? `data-label="${item.label}"` : ''}>
+            <h1>${item.title}</h1>
+            <strong>by ${item.author}</strong>
+            <p>${item.body}</p>
+          </section>`
+}
+
+App.innerHTML += Listicle({
+	title: `3 Books You Don't Want to Miss`,
+	items: books.best
+})
+
+App.innerHTML += Listicle({
+	title: `The Worst 3 Books You've Never Heard Of`,
+	items: books.worst
+})
+
 </script>
 
 <style>
-  html { margin: 2rem; }
+  body { columns: 2; }
+  article { padding: 2rem; }
 
-  main { max-width: 75ch; }
-
-  header, article {
+  header, section {
     margin-bottom: 2rem;
     padding-bottom: 2rem;
     border-bottom: 1px solid #ccc;

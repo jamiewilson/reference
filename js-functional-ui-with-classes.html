@@ -1,40 +1,24 @@
-<style>
-  html { margin: 2rem; }
-  body { max-width: 75ch; }
-  textarea {
-    all: unset;
-    width: 100%;
-    min-height: 100px;
-    word-wrap: break-word;
-  }
-
-  textarea:hover,
-  textarea:focus {
-    background: whitesmoke;
-    box-shadow: 0 0 0 10px whitesmoke;
-  }
-</style>
-
-<App/>
+<body id="App"></body>
 
 <script>
-const App = document.querySelector('App')
+const App = document.querySelector('#App')
 
 const posts = [
   {
-    author: `Jamie Wilson`,
-    title: `Javascript's Awesome`,
-    body: `Sed posuere consectetur est at lobortis. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna mollis ornare vel eu leo. Vivamus laoreet rutrum faucibus dolor auctor.`
+    title: `The Yellow River`,
+    author: `I.P. Daily`,
+    body: `Sed posuere consectetur est at lobortis. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna mollis ornare vel eu leo. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.`,
+    label: `New!`
   },
   {
-    author: `Chris Coyier`,
-    title: `Another CSS Trick`,
-    body: `Etiam porta sem malesuada magna mollis euismod. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Sed posuere consectetur est at lobortis. Vestibulum id ligula porta felis.`
+    title: `Under the Bleachers`,
+    author: `Seymour Butts`,
+    body: `Etiam porta sem malesuada magna mollis euismod. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Sed posuere consectetur est at lobortis. Vestibulum id ligula porta felis euismod semper.`
   },
   {
-    author: `Bob Saget`,
-    title: `A Home Video`,
-    body: `Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas sed diam eget risus varius blandit sit amet non magna. Vestibulum id ligula porta felis.`
+    title: `The Future of Robotics`,
+    author: `Cy Borg and Anne Droid`,
+    body: `Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas sed diam eget risus varius blandit sit amet non magna. Vestibulum id ligula porta felis euismod semper.`
   }
 ]
 
@@ -48,65 +32,80 @@ class Component {
   }
 }
 
+class Header extends Component {
+	constructor(props) {
+		super()
+		this.state = {
+			title: props.title
+		}
+	}
+	  render() {
+  	return `<header>
+	            <div>${this.state.title}</div>
+	          </header>`
+  }
+}
+
 class Post extends Component {
   constructor(props) {
     super()
     this.state = {
-      author: props.author,
       title: props.title,
-      body: props.body
+      author: props.author,
+      body: props.body,
+      label: props.label
     }
   }
 
   render() {
-    console.log(this)
-    return `<article data-id="${this._id}">
+    return `<article data-id="${this._id}" ${this.state.label ? `data-label="${this.state.label}"` : ''}>
               <h1>${this.state.title}</h1>
-              <h5>By ${this.state.author}</h5>
-              <textarea maxlength="500"
-                onchange="document.registry[${this._id}].save(this.value.trim())"
-                spellcheck="false"
-              >${this.state.body}</textarea>
+              <strong>by ${this.state.author}</strong>
+              <p>${this.state.body}</p>
             </article>`
   }
-
-  save(body) {
-    this.state.body = body
-    const self = this
-    rerender(self)
-
-  }
-}
-
-const rerender = (self) => {
- App.querySelector(`[data-id="${self._id}"]`).outerHTML = self.render()
- setHeight()
-}
-
-const setHeight = () => {
-  App.querySelectorAll('textarea').forEach(el => {
-    el.style.height = el.scrollHeight
-  })
 }
 
 // Using Array.forEach()
 const render = () => {
+	const main = document.createElement('main')
+	const mainEl = document.body.appendChild(main)
+	const header = new Header({ title: 'My favorite books' })
+	mainEl.innerHTML += header.render()
   posts.forEach((post, i) => {
     posts[i] = new Post(posts[i])
-    App.innerHTML += posts[i].render()
-    setHeight()
+    mainEl.innerHTML += posts[i].render()
   })
 }
 
 // Using Array.map()
-const renderUsingArrayMap = () => {
-  App.innerHTML = posts.map((post, i) => {
-    posts[i] = new Post(posts[i])
-    return posts[i].render()
-  }).join('')
-}
+// const renderUsingArrayMap = () => {
+//   App.innerHTML = posts.map((post, i) => {
+//     posts[i] = new Post(posts[i])
+//     return posts[i].render()
+//   }).join('')
+// }
 
 render()
 </script>
 
+<style>
+  html { margin: 2rem; }
 
+  main { max-width: 75ch; }
+
+  header, article {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #ccc;
+  }
+
+  [data-label]::before {
+    content: attr(data-label);
+    border: 1px solid #ccc;
+    padding: 4px 6px;
+    float: right;
+  }
+
+  h1 { margin-bottom: 0.5rem }
+</style>

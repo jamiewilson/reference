@@ -1,10 +1,10 @@
-window.addEventListener('load', () => {
-	const imports = document.querySelectorAll('link[rel=import]')
-	imports.forEach(file => {
-		const style = file.import.querySelector('style')
-		document.head.appendChild(style)
+const $ = (selector, target = document) => target.querySelector(selector)
+const $$ = selector => document.querySelectorAll(selector)
+const $on = (type, target, callback) => target.addEventListener(type, callback)
 
-		const template = file.import.querySelector('template').content
-		document.body.appendChild(template)
+$on('load', window, () => {
+	$$('link[rel=import]').forEach(href => {
+		document.head.appendChild($('style', href.import))
+		document.body.appendChild($('template', href.import).content)
 	})
 })
