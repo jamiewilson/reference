@@ -31,7 +31,7 @@
     const open = () => el.classList.add('open')
     const close = (el) => el.classList.remove('open')
     el.addEventListener('click', () => {
-    	isOpen() ? close(el) : (dropdowns.forEach(el => close(el)), open())
+      isOpen() ? close(el) : (dropdowns.forEach(el => close(el)), open())
     })
   })
 </script>

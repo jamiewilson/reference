@@ -10,11 +10,16 @@
 
 <script class="visible">
 const $ = (selector, target = document) => target.querySelector(selector)
-const $$ = selector => document.querySelectorAll(selector)
-const $on = (type, target, callback) => target.addEventListener(type, callback)
+const $all = (selector) => document.querySelectorAll(selector)
+
+const $on = (type, target, callback) => {
+  target instanceof NodeList
+  ? target.forEach(elem => elem.addEventListener(type, callback))
+  : target.addEventListener(type, callback)
+}
 
 $('h1').style = 'color: red;'
-$$('li').forEach(elem => $on('click', elem, inc))
+$on('click', $all('li'), inc)
 
 function inc() {
   let counter = $('.counter', this)
@@ -34,12 +39,12 @@ script.visible {
 }
 
 .counter {
-	font-weight: bold;
-	margin-right: 5px;
+  font-weight: bold;
+  margin-right: 5px;
 }
 
 li {
-	width: max-content;
+  width: max-content;
   list-style: none;
   list-style-position: outside;
   cursor: pointer;
