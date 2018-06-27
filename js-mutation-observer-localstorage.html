@@ -11,54 +11,54 @@
 </div>
 
 <script>
-  // If local storage hasn't been set, set it with the hardcoded content
-  if (!localStorage.getItem('Tinynote:Title')) {
-    localStorage.setItem('Tinynote:Title', document.title)
-  } else if (!localStorage.getItem('Tinynote:Body')) {
-    localStorage.setItem('Tinynote:Body', document.querySelector('.body').textContent)
-  } else {
-    document.title = document.querySelector('.title').textContent = localStorage.getItem('Tinynote:Title')
-    document.querySelector('.body').textContent = localStorage.getItem('Tinynote:Body')
-  }
+// If local storage hasn't been set, set it with the hardcoded content
+if (!localStorage.getItem('Tinynote:Title')) {
+  localStorage.setItem('Tinynote:Title', document.title)
+} else if (!localStorage.getItem('Tinynote:Body')) {
+  localStorage.setItem('Tinynote:Body', document.querySelector('.body').textContent)
+} else {
+  document.title = document.querySelector('.title').textContent = localStorage.getItem('Tinynote:Title')
+  document.querySelector('.body').textContent = localStorage.getItem('Tinynote:Body')
+}
 
-  // Watch all elements with contenteditable attribute
-  let elementsToWatch = document.querySelectorAll('[contenteditable]')
-  elementsToWatch.forEach(element => {
-    let observer = new MutationObserver(mutations => {
-      mutations.forEach(mutation => {
-        if (element.className === 'title') {
-          document.title = mutation.target.textContent
-          localStorage.setItem('Tinynote:Title', mutation.target.textContent)
-        } else {
-          localStorage.setItem('Tinynote:Body', mutation.target.textContent)
-        }
-      })
-    })
-    observer.observe(element, {
-      childList: true,
-      subtree: true,
-      characterData: true
+// Watch all elements with contenteditable attribute
+let elementsToWatch = document.querySelectorAll('[contenteditable]')
+elementsToWatch.forEach(element => {
+  let observer = new MutationObserver(mutations => {
+    mutations.forEach(mutation => {
+      if (element.className === 'title') {
+        document.title = mutation.target.textContent
+        localStorage.setItem('Tinynote:Title', mutation.target.textContent)
+      } else {
+        localStorage.setItem('Tinynote:Body', mutation.target.textContent)
+      }
     })
   })
+  observer.observe(element, {
+    childList: true,
+    subtree: true,
+    characterData: true
+  })
+})
 </script>
 
 <style>
-  body {
-    margin: 5% 10%;
-  }
+body {
+  margin: 5% 10%;
+}
 
-  .container {
-    max-width: 65ch;
-    margin: 0 auto;
-    line-height: 1.5;
-    font-family: system, -apple-system, BlinkMacSystemFont, Helvetica, sans-serif;
-  }
+.container {
+  max-width: 65ch;
+  margin: 0 auto;
+  line-height: 1.5;
+  font-family: system, -apple-system, BlinkMacSystemFont, Helvetica, sans-serif;
+}
 
-  [contenteditable]:hover,
-  [contenteditable]:focus {
-    background: whitesmoke;
-    outline-color: whitesmoke;
-    outline-style: solid;
-    outline-width: 10px;
-  }
+[contenteditable]:hover,
+[contenteditable]:focus {
+  background: whitesmoke;
+  outline-color: whitesmoke;
+  outline-style: solid;
+  outline-width: 10px;
+}
 </style>

@@ -1,0 +1,71 @@
+<title>Overlay Toggle</title>
+
+<button class="js-overlay-open">Open Overlay</button>
+<div class="overlay js-overlay">
+  <div class="modal">
+    <div class="overlay-close js-overlay-close">✕</div>
+    <h1>Modal</h1>
+  </div>
+</div>
+
+<script>
+const overlayOpenTrigger = document.querySelector('.js-overlay-open')
+const overlay = document.querySelector('.js-overlay')
+const overlayCloseTrigger = document.querySelector('.js-overlay-close')
+
+function overlayOpenAction (e) {
+  e.preventDefault()
+  document.documentElement.style = 'overflow: hidden;'
+  overlay.classList.add('is-open')
+}
+
+function overlayCloseAction (e) {
+  e.preventDefault()
+  document.documentElement.style = ''
+  overlay.classList.remove('is-open')
+}
+
+overlayOpenTrigger.addEventListener('click', (e) => overlayOpenAction(e))
+overlayCloseTrigger.addEventListener('click', (e) => overlayCloseAction(e))
+
+document.addEventListener('keydown', (e) => {
+  if (e.keyCode == 27) overlayCloseTrigger()
+})
+</script>
+
+<style>
+html,
+body,
+.overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.overlay { display: none; }
+.overlay.is-open {
+  display: flex;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  color: white;
+  background-color: #333;
+}
+
+.modal {
+  position: relative;
+  color: #333;
+  background-color: white;
+  padding: 3rem;
+}
+
+.overlay-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+}
+</style>

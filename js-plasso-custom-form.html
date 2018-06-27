@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Plasso Flexkit Example</title>
+  <style>
+  /**************
+    Base
+  **************/
+
+  :root {
+    --accent: #f18260;
+    --mint: #f1fdff;
+    --black: #333;
+    --grey: #555;
+    --midgrey: #bbb;
+    --lightgrey: #eee;
+    --silver: #f5f5f5;
+    --error: #eb1c26;
+  }
+
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+
+  html, body {
+    height: 100%;
+  }
+
+  body {
+    color: var(--black);
+    font-family: system, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+  }
+
+  a {
+    color: var(--name);
+    text-decoration: none;
+  }
+
+  .button {
+    color: white;
+    background: var(--accent);
+    border: none;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: 1;
+    cursor: pointer;
+    padding: 1.5rem 3rem;
+    box-shadow: 0 6px 9px rgba(150, 150, 150, 0.06),
+                0 2px 5px rgba(150, 150, 150, 0.08);
+    border-radius: 4px;
+    min-width: max-content;
+    margin-right: 2rem;
+  }
+
+  .button.--wide {
+    width: 100%;
+  }
+  /**************
+    Overlay
+  **************/
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--lightgrey);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition-property: opacity, visibility;
+    transition-duration: 200ms;
+  }
+
+  .overlay.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .overlay-close {
+    line-height: 1;
+    font-size: 1.25rem;
+    text-decoration: none;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 1rem;
+  }
+
+  .overlay-content {
+    text-align: center;
+    transition: transform 200ms ease-out;
+    max-width: 500px;
+    margin: 1rem;
+  }
+
+  .overlay.is-open .overlay-content {
+    transform: translateY(-2rem);
+  }
+
+  .overlay-header {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .overlay-title {
+    margin-bottom: 1rem;
+  }
+
+  .overlay-subtitle {
+    max-width: 40ch;
+  }
+
+  .overlay-footer {
+    margin-top: 2rem;
+  }
+
+  .price-tag {
+    background: #f1826033;
+    border-radius: 4px;
+    padding: 0.2rem 0.4rem;
+  }
+
+  /**************
+    Payment Form
+    Stripe Element
+  **************/
+
+  .payment-form.pl-error {
+    animation: shake 200ms ease-out;
+  }
+
+  .input-group {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 0 1rem;
+    position: relative;
+  }
+
+  .input-group:not(:first-child) {
+    border-top: 1px solid var(--lightgrey);
+  }
+
+  .input-label {
+    font-size: 80%;
+    min-width: 50px;
+    text-align: left;
+  }
+
+  .payment-form input {
+    padding: 1rem;
+  }
+
+  .payment-form input::placeholder {
+    color: var(--midgrey);
+  }
+
+  .counter  {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-left: 1px solid var(--lightgrey);
+  }
+
+  .counter .up-arrow,
+  .counter .down-arrow {
+    font-size: 12px;
+    color: var(--midgrey);
+    width: 1rem;
+    height: 50%;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .counter .up-arrow {
+    border-bottom: 1px solid var(--lightgrey);
+  }
+
+  .counter .up-arrow:after {
+    content: '+';
+    border-bottom-color: var(--midgrey);
+  }
+
+  .counter .down-arrow:after {
+    content: '–';
+  }
+
+  .payment-form input,
+  .payment-form fieldset {
+    font: inherit;
+    background: transparent;
+    border: none;
+    height: 100%;
+    width: 100%;
+    outline: none;
+  }
+
+  .payment-form input.pl-error {
+    color: var(--error);
+    text-shadow: 0 1px 2px var(--midgrey);
+  }
+
+
+  .payment-form fieldset {
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 6px 9px rgba(150, 150, 150, 0.06),
+                0 2px 5px rgba(150, 150, 150, 0.08);
+    margin-bottom: 1rem;
+  }
+
+  .form-error {
+    color: var(--error);
+    font-size: 90%;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+  }
+  </style>
+</head>
+
+<body>
+  <button class="button js-purchase-button">Purchase Now – $35</button>
+
+  <div class="overlay js-overlay">
+    <a class="overlay-close js-close-overlay" href="#">✕</a>
+    <div class="overlay-content">
+      <header class="overlay-header">
+        <h3 class="overlay-title">Norwester Pro License <span class="price-tag">$35</span></h3>
+        <p class="overlay-subtitle">Includes all six styles for commercial and personal use for one person, and two computers.</p>
+      </header>
+
+      <form class="payment-form"
+        data-pl-form-type="order"
+        data-pl-space-id="mltnfhrezw"
+        data-pl-success-message="Thanks for puchasing Norwester!">
+
+        <fieldset>
+          <div class="input-group">
+            <label class="input-label">Name</label>
+            <input type="text" name="pl-name" placeholder="Jane Doe" autocomplete="name" spellcheck="false" required autofocus="true" />
+          </div>
+          <div class="input-group">
+            <label class="input-label">Email</label>
+            <input type="text" name="pl-email" placeholder="janedoe@gmail.com" autocomplete="email" spellcheck="false" required/>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="input-group">
+            <label class="input-label">Card #</label>
+            <input type="text" name="pl-card-number" placeholder="4242 4242 4242 4242"/>
+          </div>
+          <div class="input-group">
+            <label class="input-label">Exp.</label>
+            <input type="text" name="pl-card-exp" placeholder="MM/YY"/>
+          </div>
+          <div class="input-group">
+            <label class="input-label">CVC</label>
+            <input type="text" name="pl-card-cvc" placeholder="123"/>
+          </div>
+        </fieldset>
+        <fieldset class="">
+          <div class="input-group">
+            <label class="input-label">QTY</label>
+            <input type="number" name="pl-quantities[]" value="1"/>
+            <div class="counter">
+              <span class="up-arrow"></span>
+              <span class="down-arrow"></span>
+            </div>
+          </div>
+        </fieldset>
+        <div class="form-error" data-pl-message></div>
+        <input type="hidden" name="pl-product-ids[]" value="norwester_pro"/>
+        <button class="button --wide" type="submit">Buy Now</button>
+        <div data-pl-file-delivery></div>
+      </form>
+      <footer class="overlay-footer">
+        Have a question? <a href="mailto:jamie@norwester.pro">Email me.</a>
+      </footer>
+    </div>
+  </div>
+
+  <script src='https://plasso.com/embed/flexkit.1.1.js'></script>
+  <script>Plasso.Flexkit.setup()</script>
+
+  <script>
+  const purchaseButton = document.querySelector('.js-purchase-button')
+  const overlay = document.querySelector('.js-overlay')
+  const closeOverlay = document.querySelector('.js-close-overlay')
+
+  purchaseButton.addEventListener('click', (e) => {
+    e.preventDefault()
+    document.documentElement.style = 'overflow: hidden;'
+    overlay.classList.add('is-open')
+  })
+
+  closeOverlay.addEventListener('click', (e) => {
+    e.preventDefault()
+    document.documentElement.style = ''
+    overlay.classList.remove('is-open')
+  })
+
+  document.addEventListener('keydown', (e) => {
+    if (e.keyCode == 27) {
+      document.documentElement.style = ''
+      overlay.classList.remove('is-open')
+    }
+  })
+  </script>
+
+</body>
+</html>
