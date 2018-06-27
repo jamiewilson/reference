@@ -1,11 +1,27 @@
 <h1>jQuery-like selector functions</h1>
 
 <ul>
-  <li><span class="counter">0</span> Dapibus</li>
-  <li><span class="counter">0</span> Parturient</li>
-  <li><span class="counter">0</span> Bibendum</li>
-  <li><span class="counter">0</span> Tortor</li>
-  <li><span class="counter">0</span> Tristique</li>
+  <li>
+    <span class="counter">0</span>
+    First Item
+    <span class="increment">+</span>
+    <span class="decrement">-</span>
+  </li>
+
+  <li>
+    <span class="counter">0</span>
+    Second Item
+    <span class="increment">+</span>
+    <span class="decrement">-</span>
+  </li>
+
+    <li>
+    <span class="counter">0</span>
+    Third Item
+    <span class="increment">+</span>
+    <span class="decrement">-</span>
+  </li>
+
 </ul>
 
 <script class="visible">
@@ -19,12 +35,17 @@ const $on = (type, target, callback) => {
 }
 
 $('h1').style = 'color: red;'
-$on('click', $all('li'), inc)
+$on('click', $all('.increment'), increment)
+$on('click', $all('.decrement'), decrement)
 
-function inc() {
-  let counter = $('.counter', this)
-  let count = +counter.textContent + 1
-  counter.textContent = count
+function increment() {
+  let counter = $('.counter', this.parentElement)
+  counter.textContent = +counter.textContent + 1
+}
+
+function decrement() {
+  let counter = $('.counter', this.parentElement)
+  counter.textContent = +counter.textContent - 1
 }
 </script>
 
@@ -52,9 +73,8 @@ li {
   margin-bottom: 0.5rem;
 }
 
-li:after {
-  content: '+';
-  margin-left: 10px;
+.increment,
+.decrement {
   color: white;
   background: lime;
   height: 18px;
